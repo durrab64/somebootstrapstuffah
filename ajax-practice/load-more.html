@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercise 3: Load More Blog Feed</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Suite Dashboard</a>
+
+    <header>
+      <h1>Load More Blog Posts</h1>
+      <p>Demonstrates client-side state tracking, paginated HTTP queries, and dynamic DOM injection.</p>
+    </header>
+
+    <div class="edu-box">
+      <strong>📝 Educational Context:</strong>
+      This exercise keeps a page index state counter in JavaScript starting at <code>1</code>. Clicking the button queries <code>/api/posts?page=X</code>, parses the response array, creates dynamic HTML nodes, appends them to <code>#blog-container</code>, and increments the page counter.
+    </div>
+
+    <div class="card">
+      <h2 class="card-title" style="margin-bottom: 1.5rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:24px; height:24px;">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-.1-8.343-.29" />
+        </svg>
+        Latest Articles Feed
+      </h2>
+
+      <!-- Container where post elements will be appended -->
+      <div id="blog-container" class="blog-feed">
+        <!-- Default initial content -->
+        <div class="blog-post">
+          <h3>Welcome to the Blog Feed</h3>
+          <p>This is standard static HTML loaded on page initialization. Click the button below to fetch more content dynamically using AJAX!</p>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <button id="load-more-btn" class="btn" style="margin-top: 1rem;">
+        Load More Articles
+      </button>
+
+      <!-- Status Indicator -->
+      <div id="feed-status" style="margin-top: 1rem; text-align: center;"></div>
+    </div>
+  </div>
+
+  <!-- Load Mock API first to intercept fetch requests -->
+  <script src="mock-api.js"></script>
+  <script>
+    // 1. Maintain a local JavaScript state tracking the current page number
+    let currentPage = 1;
+
+    const blogContainer = document.getElementById('blog-container');
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    const feedStatus = document.getElementById('feed-status');
+
+    loadMoreBtn.addEventListener('click', () => {
+      // 2. Adjust button state during active fetch request
+      const originalText = loadMoreBtn.textContent;
+      loadMoreBtn.innerHTML = '<span class="spinner"></span> Fetching articles...';
+      loadMoreBtn.disabled = true;
+      feedStatus.innerHTML = '';
+
+      // 3. Request data for the current page
+      fetch(`/api/posts?page=${currentPage}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP network error: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(posts => {
+          // Check if server returned empty data (meaning no more pages)
+          if (posts.length === 0) {
+            loadMoreBtn.style.display = 'none';
+            feedStatus.innerHTML = `
+              <div class="feedback-badge badge-green" style="display:inline-flex;">
+                🏁 All articles have been loaded. No more pages found!
+              </div>
+            `;
+            return;
+          }
+
+          // 4. Loop through array, dynamically construct HTML elements and append
+          posts.forEach(post => {
+            // Create the wrapper div
+            const postElement = document.createElement('div');
+            postElement.className = 'blog-post';
+            
+            // Construct the content inside it
+            postElement.innerHTML = `
+              <h3>${post.title}</h3>
+              <p>${post.excerpt}</p>
+            `;
+
+            // Append it to the main feed container
+            blogContainer.appendChild(postElement);
+          });
+
+          // 5. Increment the page counter upon success
+          currentPage++;
+          console.log(`Page load success. Next page index state: ${currentPage}`);
+        })
+        .catch(error => {
+          console.error("AJAX Error:", error);
+          feedStatus.innerHTML = `
+            <div class="feedback-badge badge-red" style="display:inline-flex;">
+              ❌ Could not load articles: ${error.message}
+            </div>
+          `;
+        })
+        .finally(() => {
+          // Reset button text and state if it is still visible
+          if (loadMoreBtn.style.display !== 'none') {
+            loadMoreBtn.textContent = originalText;
+            loadMoreBtn.disabled = false;
+          }
+        });
+    });
+  </script>
+</body>
+</html>

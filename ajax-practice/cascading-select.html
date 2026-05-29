@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercise 4: Cascading Dropdowns</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to Suite Dashboard</a>
+
+    <header>
+      <h1>Cascading Dropdowns</h1>
+      <p>Demonstrates select dropdown elements, change event listeners, and dynamic options mapping based on AJAX replies.</p>
+    </header>
+
+    <div class="edu-box">
+      <strong>📝 Educational Context:</strong>
+      Cascading dropdowns link the state of multiple selection inputs. Changing the <strong>Make</strong> selector fires an AJAX query to <code>/get-models?make=value</code>. We parse the list, rebuild the child options inside the <strong>Model</strong> dropdown, and toggle its <code>disabled</code> state.
+    </div>
+
+    <div class="card" style="max-width: 500px; margin: 0 auto;">
+      <h2 class="card-title" style="margin-bottom: 1.5rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:24px; height:24px;">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
+        </svg>
+        Vehicle Configurator
+      </h2>
+
+      <!-- Dropdown 1: Make -->
+      <div class="form-group">
+        <label class="form-label" for="make-select">Manufacturer (Make)</label>
+        <select id="make-select">
+          <option value="">-- Choose Manufacturer --</option>
+          <option value="toyota">Toyota</option>
+          <option value="ford">Ford</option>
+          <option value="honda">Honda</option>
+          <option value="tesla">Tesla</option>
+          <option value="bmw">BMW</option>
+        </select>
+      </div>
+
+      <!-- Dropdown 2: Model -->
+      <div class="form-group">
+        <label class="form-label" for="model-select">Vehicle Model</label>
+        <select id="model-select" disabled>
+          <option value="">-- Select Manufacturer First --</option>
+        </select>
+      </div>
+
+      <!-- Result Feedback -->
+      <div id="selection-summary" style="display: none; padding: 0.75rem 1rem; background: var(--accent-light); border: 1px dashed var(--accent); border-radius: var(--radius-sm); font-size: 0.95rem; text-align: center;">
+      </div>
+    </div>
+  </div>
+
+  <!-- Load Mock API first to intercept fetch requests -->
+  <script src="mock-api.js"></script>
+  <script>
+    const makeSelect = document.getElementById('make-select');
+    const modelSelect = document.getElementById('model-select');
+    const selectionSummary = document.getElementById('selection-summary');
+
+    // 1. Attach change event listener to the "Make" dropdown
+    makeSelect.addEventListener('change', () => {
+      const selectedMake = makeSelect.value;
+
+      // 2. Edge case: If the user resets selection back to empty default
+      if (selectedMake === '') {
+        resetModelDropdown('-- Select Manufacturer First --');
+        updateSummary();
+        return;
+      }
+
+      // 3. Update UI to show that model list is loading
+      resetModelDropdown('Loading models... please wait...');
+      modelSelect.disabled = true;
+
+      // 4. Fetch the corresponding models based on choices
+      fetch(`/get-models?make=${encodeURIComponent(selectedMake)}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Failed to load models for make "${selectedMake}"`);
+          }
+          return response.json();
+        })
+        .then(models => {
+          // 5. Clear old options and populate with fresh data
+          modelSelect.innerHTML = '<option value="">-- Choose Model --</option>';
+          
+          models.forEach(model => {
+            const option = document.createElement('option');
+            option.value = model.toLowerCase().replace(/\s+/g, '-');
+            option.textContent = model;
+            modelSelect.appendChild(option);
+          });
+
+          // 6. Enable the dropdown
+          modelSelect.disabled = false;
+          updateSummary();
+        })
+        .catch(error => {
+          console.error("AJAX Error:", error);
+          resetModelDropdown('⚠️ Failed to load models.');
+          updateSummary();
+        });
+    });
+
+    // Event listener for model selection change to show configuration summary
+    modelSelect.addEventListener('change', updateSummary);
+
+    // Helper functions
+    function resetModelDropdown(placeholderText) {
+      modelSelect.innerHTML = `<option value="">-- ${placeholderText} --</option>`;
+      modelSelect.disabled = true;
+    }
+
+    function updateSummary() {
+      if (makeSelect.value && modelSelect.value) {
+        const makeText = makeSelect.options[makeSelect.selectedIndex].text;
+        const modelText = modelSelect.options[modelSelect.selectedIndex].text;
+        selectionSummary.innerHTML = `🏁 Selected Configuration: <strong>${makeText} ${modelText}</strong>`;
+        selectionSummary.style.display = 'block';
+      } else {
+        selectionSummary.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
