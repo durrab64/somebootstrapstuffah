@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A Bootstrap 5 carousel with customized timing intervals and behavioral settings.">
+    <title>Timed Autoplay Carousel - Bootstrap 5 Showcase</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body class="bg-dark text-white" style="font-family: 'Outfit', sans-serif;">
+
+    <div class="position-absolute top-0 start-0 w-100 p-3 z-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="btn btn-outline-light btn-sm rounded-pill px-3" href="index.html">
+                <i class="bi bi-arrow-left me-1"></i> Back to Showcase
+            </a>
+            <span class="text-white-50 small">Timed Carousel (Demo 9)</span>
+        </div>
+    </div>
+
+    <div id="timedCarousel" class="carousel slide w-100 vh-100" data-bs-ride="carousel" data-bs-pause="false">
+
+        <div class="carousel-indicators z-3">
+            <button type="button" data-bs-target="#timedCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#timedCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#timedCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+
+        <div class="carousel-inner h-100">
+
+            <div class="carousel-item active h-100" data-bs-interval="8000">
+                <img src="assets/images/background.png" class="w-100 h-100 object-fit-cover position-absolute top-0 start-0" alt="Slide 1">
+                <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-60 z-1"></div>
+                <div class="position-relative d-flex flex-column align-items-center justify-content-center h-100 text-center px-4 z-2">
+                    <span class="badge bg-danger rounded-pill px-3 py-2 mb-3">Slide 1: Long Text Reading (8 Seconds)</span>
+                    <h2 class="display-4 fw-extrabold mb-3" style="max-width: 800px;">Important Operational Manual & Strategy Guide</h2>
+                    <p class="lead text-white-50 mx-auto" style="max-width: 700px;">
+                        This slide remains visible for a full 8 seconds (8000ms) so viewers can digest this vital paragraph. Here we discuss our primary mission directives, core architectural guidelines, design aesthetics, and the custom intervals powering this carousel component. Normally, placing your cursor over a slide pauses execution. Hovering over this carousel will NOT pause it because pause-on-hover is disabled.
+                    </p>
+                </div>
+            </div>
+
+            <div class="carousel-item h-100" data-bs-interval="3000">
+                <img src="assets/images/background.png" class="w-100 h-100 object-fit-cover position-absolute top-0 start-0" alt="Slide 2" style="filter: hue-rotate(180deg);">
+                <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-60 z-1"></div>
+                <div class="position-relative d-flex flex-column align-items-center justify-content-center h-100 text-center px-4 z-2">
+                    <span class="badge bg-primary rounded-pill px-3 py-2 mb-3">Slide 2: Quick Shift (3 Seconds)</span>
+                    <h2 class="display-4 fw-extrabold mb-3">Rapid Action Plan</h2>
+                    <p class="lead text-white-50 mx-auto" style="max-width: 600px;">
+                        This slide has much less text. As a result, it is configured to switch quickly after only 3 seconds (3000ms), maintaining dynamic flow.
+                    </p>
+                </div>
+            </div>
+
+            <div class="carousel-item h-100" data-bs-interval="3000">
+                <img src="assets/images/background.png" class="w-100 h-100 object-fit-cover position-absolute top-0 start-0" alt="Slide 3" style="filter: hue-rotate(280deg);">
+                <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-60 z-1"></div>
+                <div class="position-relative d-flex flex-column align-items-center justify-content-center h-100 text-center px-4 z-2">
+                    <span class="badge bg-success rounded-pill px-3 py-2 mb-3">Slide 3: Final Step (3 Seconds)</span>
+                    <h2 class="display-4 fw-extrabold mb-3">Execution Success</h2>
+                    <p class="lead text-white-50 mx-auto" style="max-width: 600px;">
+                        The third slide completes the cycle. After 3 seconds, it seamlessly loops back to the detailed manual slide.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

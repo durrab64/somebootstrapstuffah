@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A responsive sidebar layout demonstration using Bootstrap 5.">
+    <title>Responsive Sidebar Layout - Bootstrap 5 Showcase</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <i class="bi bi-arrow-left-circle-fill me-2 fs-5"></i> Back to Showcase
+            </a>
+            <span class="navbar-text text-white-50">
+                Sidebar Grid Layout (Demo 2)
+            </span>
+        </div>
+    </nav>
+
+    <header class="bg-white border-bottom py-4 mb-4">
+        <div class="container text-center">
+            <h1 class="fw-bold mb-1 h3">Responsive Sidebar Layout</h1>
+            <p class="text-muted small mb-0">
+                Sidebar is side-by-side on desktops (3 columns wide, main area is 9 columns wide) and stacks on top on mobile/tablet (both taking full 12 columns).
+            </p>
+        </div>
+    </header>
+
+    <main class="container my-4">
+        <div class="row g-4">
+
+            <aside class="col-12 col-lg-3">
+                <div class="bg-light border rounded-3 p-4">
+                    <h5 class="fw-bold mb-3 d-flex align-items-center">
+                        <i class="bi bi-filter-left me-2 text-primary"></i> Navigation Sidebar
+                    </h5>
+                    <p class="text-muted small mb-4">This side menu stacks on top of the main container on viewports smaller than 992px.</p>
+                    <div class="nav flex-column nav-pills gap-1">
+                        <a class="nav-link active" href="#"><i class="bi bi-house-door me-2"></i>Dashboard</a>
+                        <a class="nav-link text-dark" href="#"><i class="bi bi-bar-chart me-2"></i>Analytics</a>
+                        <a class="nav-link text-dark" href="#"><i class="bi bi-people me-2"></i>Customers</a>
+                        <a class="nav-link text-dark" href="#"><i class="bi bi-box-seam me-2"></i>Products</a>
+                        <a class="nav-link text-dark" href="#"><i class="bi bi-gear me-2"></i>Settings</a>
+                    </div>
+                    <hr class="my-4">
+                    <div class="bg-white p-3 rounded border text-center">
+                        <h6 class="fw-bold mb-1 small">Storage Used</h6>
+                        <div class="progress my-2" style="height: 6px;">
+                            <div class="progress-bar bg-success" style="width: 75%;"></div>
+                        </div>
+                        <span class="text-muted small">75 GB of 100 GB</span>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="col-12 col-lg-9">
+                <div class="bg-white border rounded-3 p-4 h-100">
+                    <h2 class="fw-bold mb-3">Main Content Area</h2>
+                    <p class="lead text-secondary">
+                        Welcome to your dashboard. This area stretches dynamically to occupy 9 columns of space when viewed on desktop and widescreen devices.
+                    </p>
+                    <p>
+                        Bootstrap's 12-column grid system is extremely versatile. By applying <code>.col-12</code> and <code>.col-lg-9</code> to the main section alongside <code>.col-12</code> and <code>.col-lg-3</code> to the sidebar, we create a responsive structure. Smaller screens trigger stacking behavior naturally because <code>.col-12</code> instructs the browser to fill the entire horizontal space.
+                    </p>
+
+                    <div class="row g-3 mt-4">
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <div class="p-3 border rounded bg-light">
+                                <h6 class="text-muted text-uppercase small mb-1">Total Sales</h6>
+                                <h3 class="fw-bold mb-0">$24,890</h3>
+                                <span class="text-success small"><i class="bi bi-arrow-up-right me-1"></i>+12%</span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <div class="p-3 border rounded bg-light">
+                                <h6 class="text-muted text-uppercase small mb-1">Active Users</h6>
+                                <h3 class="fw-bold mb-0">1,248</h3>
+                                <span class="text-success small"><i class="bi bi-arrow-up-right me-1"></i>+8%</span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="p-3 border rounded bg-light">
+                                <h6 class="text-muted text-uppercase small mb-1">Server Load</h6>
+                                <h3 class="fw-bold mb-0">42.5%</h3>
+                                <span class="text-danger small"><i class="bi bi-arrow-up-right me-1"></i>+3%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

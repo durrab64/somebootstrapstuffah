@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A full-viewport carousel with dark overlays and centered captions using Bootstrap 5.">
+    <title>Viewport Dark Mask Carousel - Bootstrap 5 Showcase</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body class="bg-black" style="font-family: 'Outfit', sans-serif;">
+
+    <div class="position-absolute top-0 start-0 w-100 p-3 z-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="btn btn-outline-light btn-sm rounded-pill px-3" href="index.html">
+                <i class="bi bi-arrow-left me-1"></i> Back to Showcase
+            </a>
+            <span class="text-white-50 small">Viewport Carousel (Demo 7)</span>
+        </div>
+    </div>
+
+    <div id="viewportCarousel" class="carousel slide w-100 vh-100" data-bs-ride="carousel">
+
+        <div class="carousel-indicators z-3">
+            <button type="button" data-bs-target="#viewportCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#viewportCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#viewportCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+
+        <div class="carousel-inner h-100">
+
+            <div class="carousel-item active h-100">
+                
+                <img src="assets/images/background.png" class="w-100 h-100 object-fit-cover position-absolute top-0 start-0" alt="Futuristic Tech Landscape">
+                
+                <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50 z-1"></div>
+                
+                <div class="position-relative d-flex flex-column align-items-center justify-content-center h-100 text-center text-white px-4 z-2">
+                    <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-wider">Innovate</span>
+                    <h2 class="display-3 fw-extrabold mb-3">Sleek Design Systems</h2>
+                    <p class="lead text-white-50 mx-auto" style="max-width: 600px;">
+                        Craft modern responsive grids that look stunning on any screen resolution, optimized for mobile devices.
+                    </p>
+                    <a href="#" class="btn btn-primary btn-lg rounded-pill px-5 mt-4 fw-semibold shadow">Explore Grid</a>
+                </div>
+            </div>
+
+            <div class="carousel-item h-100">
+                
+                <img src="assets/images/background.png" class="w-100 h-100 object-fit-cover position-absolute top-0 start-0" alt="Workspace Concept" style="filter: hue-rotate(120deg);">
+                
+                <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-60 z-1"></div>
+                
+                <div class="position-relative d-flex flex-column align-items-center justify-content-center h-100 text-center text-white px-4 z-2">
+                    <span class="badge bg-success rounded-pill px-3 py-2 mb-3 text-uppercase tracking-wider">Collaborate</span>
+                    <h2 class="display-3 fw-extrabold mb-3">Interactive Experiences</h2>
+                    <p class="lead text-white-50 mx-auto" style="max-width: 600px;">
+                        Engage users with smooth micro-animations, responsive structures, and fluid component transitions.
+                    </p>
+                    <a href="#" class="btn btn-success btn-lg rounded-pill px-5 mt-4 fw-semibold shadow">Start Creating</a>
+                </div>
+            </div>
+
+            <div class="carousel-item h-100">
+                
+                <img src="assets/images/background.png" class="w-100 h-100 object-fit-cover position-absolute top-0 start-0" alt="Geometric Shapes Render" style="filter: hue-rotate(240deg);">
+                
+                <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50 z-1"></div>
+                
+                <div class="position-relative d-flex flex-column align-items-center justify-content-center h-100 text-center text-white px-4 z-2">
+                    <span class="badge bg-warning text-dark rounded-pill px-3 py-2 mb-3 text-uppercase tracking-wider">Scale</span>
+                    <h2 class="display-3 fw-extrabold mb-3">Enterprise Architecture</h2>
+                    <p class="lead text-white-50 mx-auto" style="max-width: 600px;">
+                        Build solid, fast-loading responsive code layouts using modular Bootstrap classes and utility systems.
+                    </p>
+                    <a href="#" class="btn btn-warning text-dark btn-lg rounded-pill px-5 mt-4 fw-semibold shadow">View Architecture</a>
+                </div>
+            </div>
+
+        </div>
+
+        <button class="carousel-control-prev z-3" type="button" data-bs-target="#viewportCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+
+        <button class="carousel-control-next z-3" type="button" data-bs-target="#viewportCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

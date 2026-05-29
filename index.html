@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A premium showcase of Bootstrap 5 layouts, responsive grids, navbars, forms, and carousels.">
+    <title>Bootstrap 5 Showcase Dashboard</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            min-height: 100vh;
+        }
+        .showcase-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+        .showcase-card:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+            background: rgba(30, 41, 59, 0.9);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="py-5 text-center">
+        <div class="container">
+            <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 rounded-pill mb-3">Bootstrap 5 Demos</span>
+            <h1 class="display-4 fw-extrabold mb-3">Responsive <span class="text-gradient">Bootstrap 5</span> Showcase</h1>
+            <p class="lead text-secondary mx-auto" style="max-width: 600px;">
+                A collection of beautiful, responsive, and functional Bootstrap 5 layouts and components built directly using utility classes.
+            </p>
+        </div>
+    </header>
+
+    <main class="container py-4">
+        <div class="row g-4">
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card showcase-card h-100 text-white rounded-4 p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary bg-gradient p-3 rounded-3 me-3 text-white">
+                                <i class="bi bi-grid-3x3-gap-fill fs-4"></i>
+                            </div>
+                            <h3 class="h5 mb-0 fw-bold">Responsive Product Grid</h3>
+                        </div>
+                        <p class="text-secondary small">
+                            A grid that reflows from 1 column on mobile to 2 on tablets, 3 on desktops, and 4 on large screens, utilizing standard gutters and container wrapping.
+                        </p>
+                    </div>
+                    <a href="product_grid.html" class="btn btn-outline-primary w-100 rounded-pill mt-3">View Demo <i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card showcase-card h-100 text-white rounded-4 p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-info bg-gradient p-3 rounded-3 me-3 text-white">
+                                <i class="bi bi-layout-sidebar-inset fs-4"></i>
+                            </div>
+                            <h3 class="h5 mb-0 fw-bold">Sidebar Grid Layout</h3>
+                        </div>
+                        <p class="text-secondary small">
+                            A 12-column layout that displays a 3-column sidebar and 9-column main area on desktop, but stacks them fully (12 columns) on mobile and tablet.
+                        </p>
+                    </div>
+                    <a href="sidebar_layout.html" class="btn btn-outline-info w-100 rounded-pill mt-3">View Demo <i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card showcase-card h-100 text-white rounded-4 p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-success bg-gradient p-3 rounded-3 me-3 text-white">
+                                <i class="bi bi-person-badge fs-4"></i>
+                            </div>
+                            <h3 class="h5 mb-0 fw-bold">Circular Avatar Card</h3>
+                        </div>
+                        <p class="text-secondary small">
+                            A card showing a circular centered profile picture, name, role subtitle, description, and two equal-width Follow and Message buttons side-by-side.
+                        </p>
+                    </div>
+                    <a href="avatar_card.html" class="btn btn-outline-success w-100 rounded-pill mt-3">View Demo <i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card showcase-card h-100 text-white rounded-4 p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-warning bg-gradient p-3 rounded-3 me-3 text-dark">
+                                <i class="bi bi-window-top fs-4"></i>
+                            </div>
+                            <h3 class="h5 mb-0 fw-bold">Fixed Navigation Bar</h3>
+                        </div>
+                        <p class="text-secondary small">
+                            A top-fixed navbar with a hamburger menu toggler on mobile and a standalone 'Sign Up' action button pinned to the far right on desktop.
+                        </p>
+                    </div>
+                    <a href="fixed_navbar.html" class="btn btn-outline-warning w-100 rounded-pill mt-3">View Demo <i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card showcase-card h-100 text-white rounded-4 p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-danger bg-gradient p-3 rounded-3 me-3 text-white">
+                                <i class="bi bi-credit-card-2-back-fill fs-4"></i>
+                            </div>
+                            <h3 class="h5 mb-0 fw-bold">Accessible Checkout Form</h3>
+                        </div>
+                        <p class="text-secondary small">
+                            A form featuring name fields that wrap on mobile, email address with smooth focus shadows and helper texts, and a full-width submit button.
+                        </p>
+                    </div>
+                    <a href="checkout_form.html" class="btn btn-outline-danger w-100 rounded-pill mt-3">View Demo <i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card showcase-card h-100 text-white rounded-4 p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-secondary bg-gradient p-3 rounded-3 me-3 text-white">
+                                <i class="bi bi-laptop-fill fs-4"></i>
+                            </div>
+                            <h3 class="h5 mb-0 fw-bold">Dark 100vh Hero</h3>
+                        </div>
+                        <p class="text-secondary small">
+                            A full-screen dark landing section created entirely with utility classes. Text, subheadings, and action button are perfectly centered.
+                        </p>
+                    </div>
+                    <a href="hero_section.html" class="btn btn-outline-secondary w-100 rounded-pill mt-3">View Demo <i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card showcase-card h-100 text-white rounded-4 p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary bg-gradient p-3 rounded-3 me-3 text-white">
+                                <i class="bi bi-images fs-4"></i>
+                            </div>
+                            <h3 class="h5 mb-0 fw-bold">Viewport Dark Mask Carousel</h3>
+                        </div>
+                        <p class="text-secondary small">
+                            A 100vh full-screen image carousel displaying centered text overlays. Images feature a subtle dark mask using Bootstrap utilities for legibility.
+                        </p>
+                    </div>
+                    <a href="viewport_carousel.html" class="btn btn-outline-primary w-100 rounded-pill mt-3">View Demo <i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card showcase-card h-100 text-white rounded-4 p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-info bg-gradient p-3 rounded-3 me-3 text-white">
+                                <i class="bi bi-collection-play-fill fs-4"></i>
+                            </div>
+                            <h3 class="h5 mb-0 fw-bold">Multi-Item Carousel</h3>
+                        </div>
+                        <p class="text-secondary small">
+                            A responsive carousel that displays a row of 3 distinct product cards side-by-side on desktop, but degrades to 1 product card on mobile.
+                        </p>
+                    </div>
+                    <a href="product_carousel.html" class="btn btn-outline-info w-100 rounded-pill mt-3">View Demo <i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card showcase-card h-100 text-white rounded-4 p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-warning bg-gradient p-3 rounded-3 me-3 text-dark">
+                                <i class="bi bi-clock-history fs-4"></i>
+                            </div>
+                            <h3 class="h5 mb-0 fw-bold">Timed Autoplay Carousel</h3>
+                        </div>
+                        <p class="text-secondary small">
+                            A carousel configured with strict timings (8s for slide 1, 3s for others), no hover-pausing, bottom indicator dots, and no prev/next arrows.
+                        </p>
+                    </div>
+                    <a href="timed_carousel.html" class="btn btn-outline-warning w-100 rounded-pill mt-3">View Demo <i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card showcase-card h-100 text-white rounded-4 p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-success bg-gradient p-3 rounded-3 me-3 text-white">
+                                <i class="bi bi-transition fs-4"></i>
+                            </div>
+                            <h3 class="h5 mb-0 fw-bold">Crossfade Carousel</h3>
+                        </div>
+                        <p class="text-secondary small">
+                            A carousel customized with crossfade transition effect, full control overlay (dots & arrows), and aspect-ratio-restricted responsive images.
+                        </p>
+                    </div>
+                    <a href="crossfade_carousel.html" class="btn btn-outline-success w-100 rounded-pill mt-3">View Demo <i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="text-center py-5 mt-5 border-top border-secondary-subtle">
+        <p class="text-secondary mb-0">Bootstrap 5 Responsive Components &copy; 2026. Built with Pure Bootstrap 5.3.3 Utilities.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

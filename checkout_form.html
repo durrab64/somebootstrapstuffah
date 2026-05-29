@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An accessible responsive checkout form using Bootstrap 5.">
+    <title>Accessible Checkout Form - Bootstrap 5 Showcase</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        
+        .email-focus-shadow:focus {
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15) !important;
+            border-color: #0d6efd !important;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <i class="bi bi-arrow-left-circle-fill me-2 fs-5"></i> Back to Showcase
+            </a>
+            <span class="navbar-text text-white-50">
+                Checkout Form (Demo 5)
+            </span>
+        </div>
+    </nav>
+
+    <header class="bg-white border-bottom py-5 mb-5">
+        <div class="container text-center">
+            <h1 class="fw-bold mb-2">Accessible Checkout Form</h1>
+            <p class="text-muted mb-0">
+                Features side-by-side desktop fields stacking on mobile, focus glow overrides, descriptive assistant labels, and an interactive loading state submit button.
+            </p>
+        </div>
+    </header>
+
+    <main class="container mb-5" style="max-width: 600px;">
+        <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
+            
+            <h3 class="fw-bold mb-4 text-center"><i class="bi bi-shield-lock text-primary me-2"></i>Secure Checkout</h3>
+            
+            <form id="checkoutForm" novalidate>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-12 col-md-6">
+                        <label for="firstName" class="form-label fw-semibold">First Name</label>
+                        <input type="text" class="form-control py-2" id="firstName" placeholder="Jane" required>
+                        <div class="invalid-feedback">First name is required.</div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="lastName" class="form-label fw-semibold">Last Name</label>
+                        <input type="text" class="form-control py-2" id="lastName" placeholder="Doe" required>
+                        <div class="invalid-feedback">Last name is required.</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="emailAddress" class="form-label fw-semibold">Email Address</label>
+                    <input type="email" class="form-control email-focus-shadow py-2" id="emailAddress" placeholder="jane.doe@example.com" aria-describedby="emailHelp" required>
+                    <div id="emailHelp" class="form-text text-muted">
+                        <i class="bi bi-info-circle me-1"></i>We'll never share your email with anyone else.
+                    </div>
+                    <div class="invalid-feedback">Please enter a valid email address.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="billingAddress" class="form-label fw-semibold">Billing Address</label>
+                    <input type="text" class="form-control py-2" id="billingAddress" placeholder="1234 Main St" required>
+                    <div class="invalid-feedback">Please enter your billing address.</div>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-12 col-sm-6">
+                        <label for="countrySelect" class="form-label fw-semibold">Country</label>
+                        <select class="form-select py-2" id="countrySelect" required>
+                            <option value="">Choose...</option>
+                            <option>United States</option>
+                            <option>Canada</option>
+                            <option>United Kingdom</option>
+                        </select>
+                        <div class="invalid-feedback">Please select a country.</div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <label for="zipCode" class="form-label fw-semibold">Zip Code</label>
+                        <input type="text" class="form-control py-2" id="zipCode" placeholder="90210" required>
+                        <div class="invalid-feedback">Zip code is required.</div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="d-grid">
+                    <button type="submit" id="submitBtn" class="btn btn-primary btn-lg fw-semibold py-2">
+                        Complete Checkout
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.getElementById('checkoutForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const submitBtn = document.getElementById('submitBtn');
+
+            if (!form.checkValidity()) {
+                event.stopPropagation();
+                form.classList.add('was-validated');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            
+            submitBtn.classList.remove('btn-primary');
+            submitBtn.classList.add('btn-secondary');
+            
+            submitBtn.innerHTML = `
+                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                Processing Payment...
+            `;
+
+            setTimeout(function() {
+                
+                submitBtn.classList.remove('btn-secondary');
+                submitBtn.classList.add('btn-success');
+                submitBtn.innerHTML = `
+                    <i class="bi bi-check-circle-fill me-2"></i>Order Completed!
+                `;
+
+                alert("Form submitted successfully! Order processed.");
+
+                setTimeout(() => {
+                    form.classList.remove('was-validated');
+                    form.reset();
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('btn-success');
+                    submitBtn.classList.add('btn-primary');
+                    submitBtn.innerHTML = "Complete Checkout";
+                }, 2000);
+                
+            }, 2500);
+        });
+    </script>
+</body>
+</html>
