@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 05: Graceful Error Handling</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">&larr; Back to System Terminal</a>
+
+    <header>
+      <h1>Atmospheric Interrogator</h1>
+      <p>Module_05: Graceful Fault Detection &amp; State Cleanup</p>
+    </header>
+
+    <div class="edu-box">
+      <strong>[DOCUMENTATION]:</strong>
+      Queries weather endpoints. Tests network-level disconnect exceptions (direct promise rejection catches) and server-level response errors (throws on 404/500), utilizing <code>finally()</code> blocks to reset loading interfaces.
+    </div>
+
+    <div class="card" style="max-width: 550px; margin: 0 auto;">
+      <h2 class="card-title">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1.5M12 18.75V20.25M4.929 4.929l1.06 1.06M17.01 17.01l1.06 1.06M3 12h1.5M19.5 12H21M5.929 17.01l-1.06 1.06M18.07 5.929l-1.06 1.06M12 7.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9z" />
+        </svg>
+        Zone Weather Monitor
+      </h2>
+
+      <!-- Simulator -->
+      <div class="form-group" style="margin-bottom: 1rem;">
+        <label class="form-label">Signal Simulation State:</label>
+        <div class="weather-controls">
+          <button type="button" class="btn" id="sim-ok">200 OK (Clean)</button>
+          <button type="button" class="btn btn-warning" id="sim-404">404 Error</button>
+          <button type="button" class="btn btn-warning" id="sim-500">500 Error</button>
+          <button type="button" class="btn btn-danger" id="sim-offline">Offline Mode</button>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.5rem;">
+          ACTIVE METRIC VALUE: <code id="active-sim-indicator" style="color: var(--neon-cyan);">ok</code>
+        </p>
+      </div>
+
+      <button id="fetch-weather-btn" class="btn">Query Weather Grid</button>
+
+      <!-- Weather Dashboard -->
+      <div id="weather-result" style="margin-top: 1.5rem;">
+        <div style="text-align: center; color: var(--text-dim); font-size: 0.95rem; border: 1px dashed rgba(0,240,255,0.2); padding: 1.5rem; border-radius: var(--radius);">
+          [AWAITING TELEMETRY TRIGGER]
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="mock-api.js"></script>
+  <script>
+    const fetchWeatherBtn = document.getElementById('fetch-weather-btn');
+    const weatherResult = document.getElementById('weather-result');
+    const activeSimIndicator = document.getElementById('active-sim-indicator');
+
+    let currentSimStatus = 'ok';
+
+    document.getElementById('sim-ok').addEventListener('click', () => setSimStatus('ok'));
+    document.getElementById('sim-404').addEventListener('click', () => setSimStatus('404'));
+    document.getElementById('sim-500').addEventListener('click', () => setSimStatus('500'));
+    document.getElementById('sim-offline').addEventListener('click', () => setSimStatus('offline'));
+
+    function setSimStatus(status) {
+      currentSimStatus = status;
+      activeSimIndicator.textContent = status;
+      weatherResult.innerHTML = `<div style="text-align: center; color: var(--text-dim); font-size: 0.95rem; border: 1px dashed rgba(0,240,255,0.2); padding: 1.5rem; border-radius: var(--radius);">Simulation matrix loaded: "${status}". Click fetch to test.</div>`;
+    }
+
+    fetchWeatherBtn.addEventListener('click', () => {
+      fetchWeatherBtn.disabled = true;
+      weatherResult.innerHTML = `
+        <div class="feedback-badge badge-warning" style="justify-content: center;">
+          <span class="spinner"></span> Connecting satellite grids...
+        </div>
+      `;
+
+      fetch(`/api/weather?status=${currentSimStatus}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`STATUS_${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          weatherResult.innerHTML = `
+            <div class="feedback-badge badge-green" style="flex-direction: column; align-items: flex-start; gap: 0.5rem; border-radius: var(--radius);">
+              <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-main);">📍 ${data.city.toUpperCase()} DOME</div>
+              <div style="font-size: 1.8rem; font-weight: 700; color: #fff; margin: 0.25rem 0;">TEMP: ${data.temperature}</div>
+              <div style="color: var(--text-main); font-size: 0.95rem;">COND: ${data.condition.toUpperCase()}</div>
+              <div style="color: var(--text-dim); font-size: 0.85rem;">MOISTURE: ${data.humidity}</div>
+            </div>
+          `;
+        })
+        .catch(error => {
+          console.error("Caught Weather AJAX Error:", error);
+
+          if (error.message.includes('Failed to fetch') || error instanceof TypeError) {
+            weatherResult.innerHTML = `
+              <div class="feedback-badge badge-red">
+                SYSTEM: Network disconnected. Please check your connection.
+              </div>
+            `;
+          } else if (error.message.startsWith('STATUS_')) {
+            const code = error.message.split('_')[1];
+            weatherResult.innerHTML = `
+              <div class="feedback-badge badge-red">
+                SYSTEM: Weather service temporarily unavailable. (Status ${code})
+              </div>
+            `;
+          } else {
+            weatherResult.innerHTML = `
+              <div class="feedback-badge badge-red">
+                SYSTEM: Weather service temporarily unavailable.
+              </div>
+            `;
+          }
+        })
+        .finally(() => {
+          fetchWeatherBtn.disabled = false;
+        });
+    });
+  </script>
+</body>
+</html>
