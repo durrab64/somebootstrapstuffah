@@ -3,46 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Module 03: Log Pagination</title>
+  <title>Exercise 3: Load More Posts</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <a href="index.html" class="back-btn">&larr; Back to System Terminal</a>
+    <a href="index.html" class="back-btn">&larr; Back to Exercises</a>
 
     <header>
-      <h1>Datafeed Streamer</h1>
-      <p>Module_03: Asynchronous Log Chunk Loader &amp; DOM Append</p>
+      <h1>Load More Blog Posts</h1>
+      <p>Track a page counter and append posts from /api/posts?page=X</p>
     </header>
 
     <div class="edu-box">
-      <strong>[DOCUMENTATION]:</strong>
-      Manages a client page counter. Click the button to request <code>/api/posts?page=X</code>, parse JSON, construct DOM nodes, and increment the counter.
+      <strong>How it works:</strong> A variable <code>currentPage</code> starts at 1. When "Load More" is clicked, we fetch <code>/api/posts?page=1</code>, build HTML elements for each post, append them to <code>#blog-container</code>, and increment the counter.
     </div>
 
     <div class="card">
-      <h2 class="card-title" style="margin-bottom: 1.5rem;">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-.1-8.343-.29" />
-        </svg>
-        Decrypted Data Logs
-      </h2>
+      <div class="card-title">Blog Feed</div>
 
-      <!-- Container -->
       <div id="blog-container" class="blog-feed">
         <div class="blog-post">
-          <h3>Root Logs Initialized</h3>
-          <p>Local static memory allocated. Click below to stream remote database blocks into the container.</p>
+          <h3>Welcome</h3>
+          <p>This is static content. Click the button below to load posts dynamically.</p>
         </div>
       </div>
 
-      <!-- Action Button -->
-      <button id="load-more-btn" class="btn" style="margin-top: 1rem;">
-        Request Data Block
-      </button>
-
-      <!-- Status Indicator -->
-      <div id="feed-status" style="margin-top: 1rem; text-align: center;"></div>
+      <button id="load-more-btn" class="btn">Load More</button>
+      <div id="feed-status" style="margin-top:10px; text-align:center;"></div>
     </div>
   </div>
 
@@ -55,50 +43,42 @@
     const feedStatus = document.getElementById('feed-status');
 
     loadMoreBtn.addEventListener('click', () => {
-      const originalText = loadMoreBtn.textContent;
-      loadMoreBtn.innerHTML = '<span class="spinner"></span> Streaming block...';
+      loadMoreBtn.innerHTML = '<span class="spinner"></span> Loading...';
       loadMoreBtn.disabled = true;
       feedStatus.innerHTML = '';
 
       fetch(`/api/posts?page=${currentPage}`)
-        .then(response => {
-          if (!response.ok) throw new Error(`HTTP ${response.status}`);
-          return response.json();
-        })
+        .then(response => response.json())
         .then(posts => {
           if (posts.length === 0) {
             loadMoreBtn.style.display = 'none';
             feedStatus.innerHTML = `
               <div class="feedback-badge badge-green" style="display:inline-flex;">
-                SYSTEM: Memory stream complete. No more blocks detected.
+                All posts loaded — no more pages.
               </div>
             `;
             return;
           }
 
           posts.forEach(post => {
-            const postElement = document.createElement('div');
-            postElement.className = 'blog-post';
-            postElement.innerHTML = `
-              <h3>${post.title}</h3>
-              <p>${post.excerpt}</p>
-            `;
-            blogContainer.appendChild(postElement);
+            const div = document.createElement('div');
+            div.className = 'blog-post';
+            div.innerHTML = `<h3>${post.title}</h3><p>${post.excerpt}</p>`;
+            blogContainer.appendChild(div);
           });
 
           currentPage++;
         })
         .catch(error => {
-          console.error("AJAX Error:", error);
           feedStatus.innerHTML = `
             <div class="feedback-badge badge-red" style="display:inline-flex;">
-              SYSTEM: Stream break: ${error.message}
+              Error: ${error.message}
             </div>
           `;
         })
         .finally(() => {
           if (loadMoreBtn.style.display !== 'none') {
-            loadMoreBtn.textContent = originalText;
+            loadMoreBtn.textContent = 'Load More';
             loadMoreBtn.disabled = false;
           }
         });

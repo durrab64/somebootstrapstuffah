@@ -3,56 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Module 04: Cascading Dropdowns</title>
+  <title>Exercise 4: Cascading Dropdowns</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <a href="index.html" class="back-btn">&larr; Back to System Terminal</a>
+    <a href="index.html" class="back-btn">&larr; Back to Exercises</a>
 
     <header>
-      <h1>Subsystem Configurator</h1>
-      <p>Module_04: Linked Inputs &amp; Cascading Options Rebuilding</p>
+      <h1>Cascading Dropdowns</h1>
+      <p>Select a car manufacturer, then fetch and populate the models dropdown</p>
     </header>
 
     <div class="edu-box">
-      <strong>[DOCUMENTATION]:</strong>
-      Binds change events on primary inputs. Queries secondary models from <code>/get-models?make=value</code> and populates option vectors dynamically.
+      <strong>How it works:</strong> A <code>change</code> event listener on the Make dropdown sends a request to <code>/get-models?make=value</code>. We parse the returned JSON array, clear old options in the Model dropdown, add new ones, and enable it.
     </div>
 
-    <div class="card" style="max-width: 550px; margin: 0 auto;">
-      <h2 class="card-title" style="margin-bottom: 1.5rem;">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
-          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
-        </svg>
-        Drone Specifications
-      </h2>
+    <div class="card" style="max-width:500px; margin:0 auto;">
+      <div class="card-title">Vehicle Selection</div>
 
-      <!-- Make Selection -->
       <div class="form-group">
-        <label class="form-label" for="make-select">Manufacturer (Make)</label>
+        <label class="form-label">Make:</label>
         <select id="make-select">
-          <option value="">-- Select Maker --</option>
-          <option value="toyota">Toyota Cyber-Tech</option>
-          <option value="ford">Ford Heavy Ind.</option>
-          <option value="honda">Honda Robotics</option>
-          <option value="tesla">Tesla Neural</option>
-          <option value="bmw">BMW AeroSpace</option>
+          <option value="">-- Choose Make --</option>
+          <option value="toyota">Toyota</option>
+          <option value="ford">Ford</option>
+          <option value="honda">Honda</option>
+          <option value="tesla">Tesla</option>
+          <option value="bmw">BMW</option>
         </select>
       </div>
 
-      <!-- Model Selection -->
       <div class="form-group">
-        <label class="form-label" for="model-select">Chassis Line (Model)</label>
+        <label class="form-label">Model:</label>
         <select id="model-select" disabled>
-          <option value="">-- Awaiting Manufacturer Signal --</option>
+          <option value="">-- Select Make First --</option>
         </select>
       </div>
 
-      <!-- Result Summary -->
-      <div id="selection-summary" style="display: none; padding: 0.75rem 1rem; background: rgba(0, 240, 255, 0.1); border: 1px dashed var(--neon-cyan); border-radius: var(--radius); font-size: 0.95rem; text-align: center; color: var(--neon-cyan);">
-      </div>
+      <div id="selection-summary" style="display:none; padding:10px; border:1px solid #1e3a5f; border-radius:4px; text-align:center; font-weight:bold;"></div>
     </div>
   </div>
 
@@ -66,22 +55,20 @@
       const selectedMake = makeSelect.value;
 
       if (selectedMake === '') {
-        resetModelDropdown('-- Awaiting Manufacturer Signal --');
-        updateSummary();
+        modelSelect.innerHTML = '<option value="">-- Select Make First --</option>';
+        modelSelect.disabled = true;
+        selectionSummary.style.display = 'none';
         return;
       }
 
-      resetModelDropdown('Receiving remote telemetry...');
+      modelSelect.innerHTML = '<option value="">Loading...</option>';
       modelSelect.disabled = true;
 
       fetch(`/get-models?make=${encodeURIComponent(selectedMake)}`)
-        .then(response => {
-          if (!response.ok) throw new Error('Telemetry corrupted');
-          return response.json();
-        })
+        .then(response => response.json())
         .then(models => {
           modelSelect.innerHTML = '<option value="">-- Choose Model --</option>';
-          
+
           models.forEach(model => {
             const option = document.createElement('option');
             option.value = model.toLowerCase().replace(/\s+/g, '-');
@@ -90,32 +77,22 @@
           });
 
           modelSelect.disabled = false;
-          updateSummary();
         })
-        .catch(error => {
-          console.error("AJAX Error:", error);
-          resetModelDropdown('⚠️ Telemetry error');
-          updateSummary();
+        .catch(() => {
+          modelSelect.innerHTML = '<option value="">Error loading models</option>';
         });
     });
 
-    modelSelect.addEventListener('change', updateSummary);
-
-    function resetModelDropdown(placeholderText) {
-      modelSelect.innerHTML = `<option value="">-- ${placeholderText} --</option>`;
-      modelSelect.disabled = true;
-    }
-
-    function updateSummary() {
+    modelSelect.addEventListener('change', () => {
       if (makeSelect.value && modelSelect.value) {
         const makeText = makeSelect.options[makeSelect.selectedIndex].text;
         const modelText = modelSelect.options[modelSelect.selectedIndex].text;
-        selectionSummary.innerHTML = `SYSTEM CONFIG: [${makeText.toUpperCase()} // ${modelText.toUpperCase()}] ACTIVE`;
+        selectionSummary.textContent = `Selected: ${makeText} ${modelText}`;
         selectionSummary.style.display = 'block';
       } else {
         selectionSummary.style.display = 'none';
       }
-    }
+    });
   </script>
 </body>
 </html>
